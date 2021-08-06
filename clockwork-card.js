@@ -69,6 +69,7 @@ class ClockWorkCard extends HTMLElement {
             var _clock = _other_clocks[i];
             var _timezone;
             var _name;
+            var _weekdayFormat = 'short';
             
             if (typeof(_clock) == 'string') {
                 _timezone = _clock;
@@ -76,6 +77,7 @@ class ClockWorkCard extends HTMLElement {
             } else if (typeof(_clock) == 'object') {
                 _timezone = _clock['tz'] || 'undefined';
                 _name = _clock['name'] || _timezone;
+                _weekdayFormat = _clock['weekday'] || 'short';
             }
                 
             //Format other timezone.
@@ -83,7 +85,7 @@ class ClockWorkCard extends HTMLElement {
                 hour: 'numeric',
                 minute: 'numeric',
                 timeZone: _timezone,
-                weekday: 'short'
+                weekday: _weekdayFormat
             }); 
             
             // List other Timezone.
