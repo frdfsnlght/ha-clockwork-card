@@ -15,7 +15,7 @@ class ClockWorkCard extends HTMLElement {
         const config = this.config;
         const locale = config.locale;
         const _locale = locale ? locale : undefined;
-        var _other_timezones = config.other_time;
+        var _other_clocks = config.other_clocks;
         
         const entityId = config.entity;
 
@@ -60,28 +60,39 @@ class ClockWorkCard extends HTMLElement {
             month : 'long'
         });
 
-        //Build List of Other Timezones
-        //
+        //Build List of Other Clocks
         var otherclocks = `
             <div class = "other_clocks">
             `;
-        var i;
-        var j = _other_timezones.length; //TODO: Recommend max 3.
-        for (i= 0; i < j; i++) {
-            //Format other timezones.
+        // TODO: Recommend max 3.
+        for (var i = 0; i < _other_clocks.length; i++) {
+            var _clock = _other_clocks[i];
+            var _timezone;
+            var _name;
+            
+            if (typeof(_clock) == 'string') {
+                _timezone = _clock;
+                _name = _clock;
+            } else if (typeof(_clock) == 'object') {
+                _timezone = _clock['tz'] || 'undefined';
+                _name = _clock['name'] || _timezone;
+            }
+                
+            //Format other timezone.
             var _tztime = _date_time.toLocaleTimeString(_locale, {
                 hour: 'numeric',
                 minute: 'numeric',
-                timeZone: _other_timezones[i],
+                timeZone: _timezone,
                 weekday: 'short'
             }); 
             
-            // List other Timezones.
+            // List other Timezone.
             otherclocks = otherclocks + `
-                <div class="tz_locale">${_other_timezones[i]} </div> 
+                <div class="tz_locale">${_name} </div> 
                 <div class="otime"> ${_tztime} </div>
             `;
             //console.log(_tztime);
+            
         };
         otherclocks = otherclocks + `
             </div>
