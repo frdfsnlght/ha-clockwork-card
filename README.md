@@ -2,7 +2,7 @@
 
 [![hacs_badge](https://img.shields.io/badge/HACS-Custom-orange.svg?style=for-the-badge)](https://github.com/custom-components/hacs)
 
-**Current Version:** 0.1.2
+**Current Version:** 0.2.0
 
 This is a simple little custom lovelace element that shows a clock and some extra timezones for Home Assistant.
 
@@ -38,7 +38,9 @@ resource:
 ## CONFIGURATION
 
 Then in your lovelace configuration edit accordingly.
-It requires you have an existing [date_time_iso](https://www.home-assistant.io/integrations/time_date/) sensor. (Actually it doesnt read note below)
+Will use browser's date/time if entity is not specified. Otherwise, entity should be an existing [date_time_iso](https://www.home-assistant.io/integrations/time_date/) sensor.
+
+The other_clocks section can contain zero or more (probably no more than 3) other clocks to display. Each clock can simply be a timezone name or an object with a tz property and optional name and weekday format (short or long). If unspecified, the name defaults to the timezone and the weekday format defaults to short.
 
 The Rest should be pretty self explanatory.
 
@@ -47,9 +49,11 @@ The Rest should be pretty self explanatory.
     #title: "My Time"
     locale: en-AU
     entity: sensor.date_time_iso
-    other_time:
-      - "America/New_York"
-      - "Australia/Sydney"
+    other_clocks:
+      - tz: "America/New_York"
+        name: "Big Apple"
+      - tz: "Australia/Sydney"
+        weekday: long
       - "America/Los_Angeles"
 ```
 
